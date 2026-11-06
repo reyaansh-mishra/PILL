@@ -12,9 +12,9 @@ BUILD_DIR="build"
 LINKER_SCRIPT=""
 ENTRY=""                       # e.g. ENTRY=_start ./build.sh  (if linker.ld has no ENTRY())
 LD_EMU="aarch64elf"            # arm64pe only if you're making a PE/EFI image
-JOBS="$(nproc)"
+JOBS="8"
 
-CC=clang CXX=clang++ AS=clang LD=ld.lld
+CC=clang CXX=clang++ AS=clang LD=ld.lld-mp-22
 BIN="$BUILD_DIR/$NAME"
 
 inc=(); for d in "${INC_DIRS[@]}"; do inc+=("-I$d"); done
