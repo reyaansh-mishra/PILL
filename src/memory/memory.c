@@ -9,26 +9,20 @@
 #include <pill/memory.h>
 #include <pill/uefi.h>
 
-#include <private-includes/block_allocator.h>
+#include <private-includes/blal.h>
 
 void* malloc(size_t size) {
         switch ((int)is_uefi_alive) {
                 case true:
                         return pre_malloc_malloc_provider(size);
                 case false:
-                        return block_allocator_allocate(size);
+                        return blal_allocate(size);
         };
         return NULL;
 };
 
-void free(void* ptr) {
-        if (ptr == NULL) { return; };
-        switch ((int)is_uefi_alive) {
-                case true:
-                        return pre_free_free_provider(ptr);
-                case false:
-                        return block_allocator_free(ptr);
-        };
+void free(void* __attribute__((unused)) ptr) {
+        return; // Not implemented
 };
 
 void* memcpy(void* dest, const void* src, size_t size) {
